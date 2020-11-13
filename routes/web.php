@@ -28,3 +28,9 @@ Route::get('/news/{category_slug}/{id}', [\App\Http\Controllers\NewsController::
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('/contact-us', \App\Http\Controllers\FeedbackController::class);
+
+Route::resource('/parser', \App\Http\Controllers\ParserController::class);
+
+
