@@ -12,13 +12,9 @@
         @foreach($categories as $c)
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2 class="card-title">{{ $c['name'] }}</h2>
-                    <p class="card-text">{{ $c['description'] }}</p>
-                    <a href="{{ route('news.index', ['category_slug' => $c['slug']]) }}" class="btn btn-primary">Посмотреть новости &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted on January 1, 2020 by
-                    <a href="#">Admin</a>
+                    <h2 class="card-title">{{ $c->title }}</h2>
+                    <p class="card-text">{{ $c->description }}</p>
+                    <a href="{{ route('categories.show', ['id' => $c->id]) }}" class="btn btn-primary">Посмотреть новости &rarr;</a>
                 </div>
             </div>
         @endforeach

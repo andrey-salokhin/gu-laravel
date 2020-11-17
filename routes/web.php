@@ -21,9 +21,11 @@ Route::get('/welcome/{name}', [\App\Http\Controllers\WelcomeController::class, '
 
 Route::get('/categories', [\App\Http\Controllers\CategoriesController::class, 'index'])->name('categories.index');
 
-Route::get('/news/{category_slug?}', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+Route::get('/categories/{id}', [\App\Http\Controllers\CategoriesController::class, 'show'])->name('categories.show');
 
-Route::get('/news/{category_slug}/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+
+Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 
 Auth::routes();
 
