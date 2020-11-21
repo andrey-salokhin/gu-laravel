@@ -9,13 +9,18 @@ class NewsController extends Controller
 {
     public function index () {
 
-        $obj = new News();
-        return view('news.index', ['news' => $obj->getAllNews()]);
+        $news = News::orderBy('id', 'desc')->paginate(5);
+        return view('news.index', ['news' => $news]);
     }
 
     public function show ($id) {
 
-        $obj = new News();
-        return view('news.show', ['news' => $obj->getNewsById($id), 'id' => $id]);
+        $news = News::where('id', $id)->first();
+        return view('news.show', ['news' => $news]);
+
+    }
+
+    public function store(Request $request){
+
     }
 }
