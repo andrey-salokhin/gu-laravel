@@ -12,12 +12,8 @@ class News extends Model
 
     protected $table = 'news';
 
-    public function getAllNews(){
-        return DB::table($this->table)->get();
-    }
-
-    public function getNewsById($id){
-        return DB::table($this->table)->where(['id' => $id])->first();
-    }
+    protected $fillable = [
+        'title', 'author', 'description', 'slug'
+    ];
 
 }

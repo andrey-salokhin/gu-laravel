@@ -9,12 +9,12 @@
             </h1>
 
             <!-- Blog Post -->
-            @foreach($categories as $c)
+            @foreach($newsList as $news)
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h2 class="card-title">{{ $c->title }}</h2>
-                        <p class="card-text">{{ $c->description }}</p>
-                        <a href="{{ route('news.show', ['id' => $c->id]) }}" class="btn btn-primary">Посмотреть новость &rarr;</a>
+                        <h2 class="card-title">{{ $news->title }}</h2>
+                        <p class="card-text">{{ $news->description }}</p>
+                        <a href="{{ route('news.show', ['id' => $news->id]) }}" class="btn btn-primary">Посмотреть новость</a>
                     </div>
                 </div>
             @endforeach

@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
+    Route::resource('/categories', \App\Http\Controllers\Admin\CategoriesController::class);
 });
 
 Route::get('/welcome/{name}', [\App\Http\Controllers\WelcomeController::class, 'index'])->name('welcome.user');
@@ -34,5 +37,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/contact-us', \App\Http\Controllers\FeedbackController::class);
 
 Route::resource('/parser', \App\Http\Controllers\ParserController::class);
-
 

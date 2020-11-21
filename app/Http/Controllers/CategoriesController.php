@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
+use function React\Promise\all;
 
 class CategoriesController extends Controller
 {
     public function index () {
 
-        $obj = new Category();
-        return view('categories.index', ['categories' => $obj->getAllCategories()]);
+        $categoreis = Category::all();
+        return view('categories.index', ['categories' => $categoreis]);
+
     }
 
     public function show ($id){
 
-        $obj = new Category();
-        return view('categories.show', ['categories' => $obj->getNewsByCategoryId($id), 'id' => $id]);
+        $category = Category::find($id);
+
+        $newsList = $category->news()->get();
+        return view('categories.show', ['newsList' => $newsList]);
     }
 }
