@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsCreate;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -35,16 +36,10 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsCreate $request)
     {
 
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'author' => 'required'
-        ]);
-
-        $data = $request->only(['title', 'author', 'description']);
+        $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
         $create = News::create($data);
         if($create) {
@@ -84,11 +79,11 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(NewsCreate $request, News $news)
     {
 
         $newsId = $news->id;
-        $data = $request->only(['title', 'author', 'description']);
+        $data = $request->validated();
         $news = News::find($newsId);
         $news->title       = $request->get('title');
         $news->description      = $request->get('description');

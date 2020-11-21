@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryCreate;
+use App\Http\Requests\CategoryUpdate;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -35,14 +37,14 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryCreate $request)
     {
 
-        $data = $request->only(['title', 'description']);
+        $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
         $create = Category::create($data);
         if($create) {
-            return back()->with('success', 'Новость успешно добавлена');
+            return redirect()->route('categories.index')->with('success', 'Новость успешно добавлена');
         }
 
         return back()->with('fail', 'Не удалось добавить новость');
@@ -77,10 +79,10 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdate $request, Category $category)
     {
         $categoryId = $category->id;
-        $data = $request->only(['title', 'description']);
+        $data = $request->validated();
         $category = Category::find($categoryId);
         $category->title       = $request->get('title');
         $category->description      = $request->get('description');

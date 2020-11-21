@@ -6,7 +6,7 @@
                     <div class="col-md-8">
 
                         @if(session()->has('remove-success'))
-                            <div class="alert alert-success">Новость успешно отредактирована</div>
+                            <div class="alert alert-success">Новость успешно удалена</div>
                         @endif
 
                         <h1 class="my-4">Список всех новостей:
