@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsUpdate extends FormRequest
+class UsersCreate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,10 @@ class NewsUpdate extends FormRequest
     public function rules()
     {
         return [
-            'title'       => ['required', 'string', 'min:3', 'max:150'],
-            'author'      => ['required', 'string', 'max:15'],
-            'description' => ['sometimes']
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'title' => 'заголовок',
-            'description' => 'описание',
-            'author' => 'автор'
+            'name'       => ['required', 'string', 'min:3', 'max:50'],
+            'email'      => ['required', 'string', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'is_admin' => ['sometimes'],
         ];
     }
 }

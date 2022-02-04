@@ -6,10 +6,31 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Главная
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Главная</a>
                 </li>
+                @if (Route::has('login'))
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('account.index') }}">Личный кабинет</a>
+                        </li>
+                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">Админка</a>
+                            </li>
+                        @endif
+                    @else
+
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link">Войти</a>
+                        </li>
+                            @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link">Зарегистрироваться</a>
+                            </li>
+                        @endif
+                    @endif
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('news.index') }}">Новости</a>
                 </li>

@@ -12,12 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
-    Route::resource('/categories', \App\Http\Controllers\Admin\CategoriesController::class);
+Route::group(['middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'account'], function () {
+       Route::get('/', [\App\Http\Controllers\Account\IndexController::class, 'index'])->name('account.index');
+    });
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
+        Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
+        Route::resource('/categories', \App\Http\Controllers\Admin\CategoriesController::class);
+        Route::resource('/users',\App\Http\Controllers\Admin\UsersController::class);
+    });
 });
 
 Route::get('/welcome/{name}', [\App\Http\Controllers\WelcomeController::class, 'index'])->name('welcome.user');
@@ -30,7 +37,7 @@ Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->nam
 
 Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

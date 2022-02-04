@@ -11,8 +11,11 @@
 
                         <h1 class="my-4">Список всех новостей:
                         </h1>
-
-                            <a href="{{ route('news.create') }}" class="btn btn-primary">Добавить новость</a>
+                            @auth
+                                @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
+                                    <a href="{{ route('news.create') }}" class="btn btn-primary">Добавить новость</a>
+                                @endif
+                            @endauth
                             <br>
                             <br>
 
@@ -23,14 +26,23 @@
                                     <h2 class="card-title">{{  $n->title }}</h2>
                                     <p class="card-text">{{ $n->description }}</p>
                                     <a href="{{ route('news.show', ['id' => $n->id]) }}" class="btn btn-primary">Посмотреть новость</a>
-                                    <a href="{{ route('news.edit', ['news' => $n]) }}" class="btn btn-primary">Редактировать новость</a>
+                                    @auth
+                                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
+                                            <a href="{{ route('news.edit', ['news' => $n]) }}" class="btn btn-primary">Редактировать новость</a>
+                                        @endif
+                                    @endauth
                                     <br>
                                     <br>
-                                    <form action="{{ route('news.destroy', ['news' => $n]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Удалить новость</button>
-                                    </form>
+                                    @auth
+                                        @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
+                                            <form action="{{ route('news.destroy', ['news' => $n]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Удалить новость</button>
+                                            </form>
+                                        @endif
+                                    @endauth
+
                                 </div>
                                 <div class="card-footer text-muted">
                                     Posted on {{ $n->created_at }}
