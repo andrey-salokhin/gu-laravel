@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewsEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsCreate;
 use App\Models\News;
@@ -43,6 +44,7 @@ class NewsController extends Controller
         $data['slug'] = Str::slug($data['title']);
         $create = News::create($data);
         if($create) {
+            event(new NewsEvent($create));
             return back()->with('success', 'Новость успешно добавлена');
         }
 

@@ -16,6 +16,13 @@ Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\NewsController::class, 'index']);
 
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/login/vk', [\App\Http\Controllers\Socialite\VKSocialiteController::class, 'redirectToProvider'])->name('vk.login');
+    Route::get('/login/vk/callback', [\App\Http\Controllers\Socialite\VKSocialiteController::class, 'handleProviderCallback'])->name('vk.login.callback');
+    Route::get('/login/facebook', [\App\Http\Controllers\Socialite\FBSocialiteController::class, 'redirectToProvider'])->name('fb.login');
+    Route::get('/login/facebook/callback', [\App\Http\Controllers\Socialite\FBSocialiteController::class, 'handleProviderCallback'])->name('fb.login.callback');
+});
+
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'account'], function () {
        Route::get('/', [\App\Http\Controllers\Account\IndexController::class, 'index'])->name('account.index');
@@ -24,7 +31,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
         Route::resource('/categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('/users',\App\Http\Controllers\Admin\UsersController::class);
-    });
+        Route::get('/exchange_rates/update_all', [\App\Http\Controllers\Admin\ExchangeRatesController::class, 'updateAll'])->name('exchange_rates.update_all');
+        Route::get('/exchange_rates/remove_all', [\App\Http\Controllers\Admin\ExchangeRatesController::class, 'removeAll'])->name('exchange_rates.remove_all');
+        Route::resource('/exchange_rates', \App\Http\Controllers\Admin\ExchangeRatesController::class);
+       });
 });
 
 Route::get('/welcome/{name}', [\App\Http\Controllers\WelcomeController::class, 'index'])->name('welcome.user');
@@ -37,11 +47,9 @@ Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->nam
 
 Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/contact-us', \App\Http\Controllers\FeedbackController::class);
 
-Route::resource('/parser', \App\Http\Controllers\ParserController::class);
+
 

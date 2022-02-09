@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+    <x-database_rates></x-database_rates>
                 <div class="row">
 
                     <!-- Blog Entries Column -->
