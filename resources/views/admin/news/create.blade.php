@@ -9,7 +9,7 @@
         @endif
         <h1>Добавить новость на сайт</h1>
         <br>
-        <form method="post" action="{{ route('news.store') }}">
+        <form method="post" action="{{ route('news.store') }}" enctype="multipart/form-data">
             @csrf
             <label for="title" class="col-form-label">Заголовок</label>
             <input id = "title" type="text" name="title" value="{{ old('title') }}" class="form-control">
@@ -19,6 +19,9 @@
                 @endforeach
             </div>
             @enderror
+            <br>
+            <label for="image" class="col-form-label">Изображение</label>
+            <input id="image" type="file" name="image" value="" class="form-control">
             <br>
             <label for="description" class="col-form-label">Описание новости</label>
             <textarea id="description" name="description" class="form-control">{{ old('description') }}</textarea>
@@ -43,4 +46,21 @@
         </form>
     </div>
     <br>
+    @push('scripts')
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/ckeditor.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/adapters/jquery.js"></script>
+        <script>
+            var route_prefix = "/filemanager";
+        </script>
+        <script>
+            $('textarea[name=description]').ckeditor({
+                height: 100,
+                filebrowserImageBrowseUrl: route_prefix + '?type=Images',
+                filebrowserImageUploadUrl: route_prefix + '/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: route_prefix + '?type=Files',
+                filebrowserUploadUrl: route_prefix + '/upload?type=Files&_token={{csrf_token()}}'
+            });
+        </script>
+    @endpush
 @endsection
+

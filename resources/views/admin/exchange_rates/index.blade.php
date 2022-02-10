@@ -6,6 +6,7 @@
     @if(session()->has('fail'))
         <div class="alert alert-success">{{ session('fail') }}</div>
     @endif
+    <div style="display: flex; justify-content: center;">
         <div class="card mb-4">
             <div class="card-body">
                 <h2 class="card-title">Курсы серверных валют по состоянию на {{ $xchanges['LastUpdate'] }}</h2>
@@ -26,10 +27,14 @@
                         </tr>
                     @endforeach
                 </table>
-                <a href="{{ route('exchange_rates.update_all')}}">Создать или обновить записи в базе данных</a>
-                <a href="{{ route('exchange_rates.remove_all') }}">Удалить все записи</a>
+
                 </div>
         </div>
-        <h2 class="card-title">Курсы валют в базе данных</h2>
                 <x-database_rates></x-database_rates>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <a class="btn btn-primary" style="margin-right: 15px;" href="{{ route('admin.parser.rates') }}">Обновить записи в базе данных</a>
+        <a class="btn btn-danger" href="{{ route('exchange_rates.remove_all') }}">Удалить все записи</a>
+    </div>
+
 @endsection

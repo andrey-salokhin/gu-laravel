@@ -6,7 +6,6 @@ use App\Events\NewsEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsCreate;
 use App\Models\News;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class NewsController extends Controller
@@ -42,6 +41,11 @@ class NewsController extends Controller
 
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('news', $fileName);
+        }
         $create = News::create($data);
         if($create) {
             event(new NewsEvent($create));
@@ -91,6 +95,11 @@ class NewsController extends Controller
         $news->description      = $request->get('description');
         $news->author = $request->get('author');
         $news->slug = Str::slug($request->get('title'));
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $news['image'] = $file->storeAs('news', $fileName);
+        }
         $save = $news->save();
         if($save){
             return redirect()->route('news.show', ['id' => $newsId])->with('update-success', 'News updated!');

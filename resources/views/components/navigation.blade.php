@@ -18,6 +18,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('users.index') }}">Админка</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.parser') }}">Парсер</a>
+                            </li>
                         @endif
                     @else
 

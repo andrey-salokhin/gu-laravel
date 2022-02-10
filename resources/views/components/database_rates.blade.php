@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-body">
         @if($rates)
-            <h2 class="card-title">Курсы валют по состоянию на {{ $rates[0]->updated_at->format('M d Y') }}</h2>
+            <h2 class="card-title">Курсы валют по состоянию на {{ $rates[0]->updated_at->format('d.m.Y') }}</h2>
             <p class="card-text">
             <table>
                 <tr>

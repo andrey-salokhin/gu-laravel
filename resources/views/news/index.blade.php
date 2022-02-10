@@ -25,7 +25,10 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h2 class="card-title">{{  $n->title }}</h2>
-                                    <p class="card-text">{{ $n->description }}</p>
+                                    @if($n->image)
+                                        <img src="{{ Storage::disk('uploads')->url($n->image) }}" style="width: 200px">
+                                    @endif
+                                    <p class="card-text">{!! $n->description !!}</p>
                                     <a href="{{ route('news.show', ['id' => $n->id]) }}" class="btn btn-primary">Посмотреть новость</a>
                                     @auth
                                         @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)

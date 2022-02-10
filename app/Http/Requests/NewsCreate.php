@@ -26,7 +26,8 @@ class NewsCreate extends FormRequest
         return [
             'title'       => ['required', 'string', 'min:3', 'max:150'],
             'author'      => ['required', 'string', 'max:15'],
-            'description' => ['sometimes']
+            'description' => ['sometimes'],
+            'image' => ['sometimes']
         ];;
     }
 

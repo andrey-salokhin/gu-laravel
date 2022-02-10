@@ -26,9 +26,6 @@ class NewsUpdateImageListener
      */
     public function handle($event)
     {
-        if (isset($event) && $event->news instanceof News) {
-            $event->news->image = '/test/path';
-            $event->news->save();
-        }
+        //
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Socialite;
 
 use App\Http\Controllers\Controller;
-use App\Service\SocialiteService;
+use App\Services\SocialiteService;
 use Laravel\Socialite\Facades\Socialite;
 
 

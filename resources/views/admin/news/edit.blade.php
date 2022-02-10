@@ -16,8 +16,18 @@
                 @endforeach
             </div>
             @enderror
+
+            @if($news->image)
+                <p>Текущее изображение </p>
+                <img src="{{ Storage::disk('uploads')->url($news->image) }}" style="width: 200px">
+                <p>Если хотите поменять изображение, вставьте новое в поле ниже</p>
+            @else()
+                <p>Изображение отсутсвует </p>
+            @endif
+            <label for="image" class="col-form-label">Изображение</label>
+            <input id="image" type="file" name="image" class="form-control">
             <label for="description" class="col-form-label">Описание новости</label>
-            <textarea id="description" name="description" class="form-control">{{ $news->description }}</textarea>
+            <textarea id="editor" name="description" class="form-control">{{ $news->description }}</textarea>
             @error('description') <div class="alert alert-danger">
                 @foreach($errors->get('description') as $error)
                     {{ $error }}
@@ -39,4 +49,20 @@
         </form>
     </div>
     <br>
+    @push('scripts')
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/ckeditor.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/adapters/jquery.js"></script>
+        <script>
+            var route_prefix = "/filemanager";
+        </script>
+        <script>
+            $('textarea[name=description]').ckeditor({
+                height: 100,
+                filebrowserImageBrowseUrl: route_prefix + '?type=Images',
+                filebrowserImageUploadUrl: route_prefix + '/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: route_prefix + '?type=Files',
+                filebrowserUploadUrl: route_prefix + '/upload?type=Files&_token={{csrf_token()}}'
+            });
+        </script>
+    @endpush
 @endsection

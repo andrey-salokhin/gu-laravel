@@ -8,7 +8,10 @@
 
     <div>
         <h2>{{ $news->title }}</h2>
-        <p>{{ $news->description }}</p>
+        @if($news->image)
+            <img src="{{ Storage::disk('uploads')->url($news->image) }}" style="width: 200px">
+        @endif
+        <p>{!! $news->description !!} </p>
         @auth
             @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
                 <a href="{{ route('news.edit', ['news' => $news]) }}" class="btn btn-primary">Редактировать новость</a>

@@ -31,9 +31,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/news', \App\Http\Controllers\Admin\NewsController::class);
         Route::resource('/categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('/users',\App\Http\Controllers\Admin\UsersController::class);
-        Route::get('/exchange_rates/update_all', [\App\Http\Controllers\Admin\ExchangeRatesController::class, 'updateAll'])->name('exchange_rates.update_all');
-        Route::get('/exchange_rates/remove_all', [\App\Http\Controllers\Admin\ExchangeRatesController::class, 'removeAll'])->name('exchange_rates.remove_all');
-        Route::resource('/exchange_rates', \App\Http\Controllers\Admin\ExchangeRatesController::class);
+        Route::get('/parser', [\App\Http\Controllers\Admin\ParserController::class, 'index'])->name('admin.parser');
+        Route::get('/parser/news', [\App\Http\Controllers\Admin\NewsParserController::class, 'index'])->name('admin.parser.news');
+        Route::get('/parser/rates', [\App\Http\Controllers\Admin\RatesParserController::class, 'index'])->name('admin.parser.rates');
+        Route::get('/exchange_rates/remove_all', [\App\Http\Controllers\Admin\RatesController::class, 'removeAll'])->name('exchange_rates.remove_all');
+        Route::resource('/exchange_rates', \App\Http\Controllers\Admin\RatesController::class);
        });
 });
 
@@ -50,6 +52,3 @@ Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'show'])-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/contact-us', \App\Http\Controllers\FeedbackController::class);
-
-
-
